@@ -7,6 +7,8 @@ permissions: write-all
 jobs:
   dispatch-custom-event:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.DOWNSTREAM_REPO_DISPATCH_TOKEN }}
     steps:
     - name: Trigger downstream repository_dispatch
       run: |
