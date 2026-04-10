@@ -1,0 +1,18 @@
+name: SOURCE_EVENT
+on:
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  dispatch-custom-event:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Trigger downstream repository_dispatch
+      run: |
+        gh api \
+          --method POST\
+          repos/SauVans/githubActions2/dispatches \
+          -f event_type='githubActions-release-published'
+  
+
