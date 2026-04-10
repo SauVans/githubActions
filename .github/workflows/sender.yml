@@ -20,6 +20,6 @@ jobs:
           --method POST\
           repos/SauVans/githubActions2/dispatches \
           -f event_type='githubActions-release-published' \
-          -f client_payload='{"release_version": "${{ github.event.inputs.release_version }}"}' 
+          -f client_payload:'{\"release_version": "${{ github.event.inputs.release_version }}"}'
   
 
