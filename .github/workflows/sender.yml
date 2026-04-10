@@ -1,6 +1,10 @@
 name: SOURCE_EVENT
 on:
   workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version to send to downstream repository'
+        required: true
 
 permissions: write-all
 
@@ -15,6 +19,7 @@ jobs:
         gh api \
           --method POST\
           repos/SauVans/githubActions2/dispatches \
-          -f event_type='githubActions-release-published'
+          -f event_type='githubActions-release-published' \
+          -f client_payLoad='{"release_version": ${{ inputs.release_version }}}'
   
 
