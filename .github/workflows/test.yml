@@ -1,1 +1,21 @@
 name: Test
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version to send to downstream repository'
+        required: true
+
+permissions: write-all
+
+jobs:
+  dispatch-custom-event:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.DOWNSTREAM_REPO_DISPATCH_TOKEN }}
+    steps:
+    - name: Trigger downstream repository_dispatch
+      run: |
+        ORT_RELEASE_BRANCH="release/${{ github.event.inputs.release_version }}"
+        echo "ORT_RELEASE_BRANCH: ${ORT_RELEASE_BRANCH}"
+  
