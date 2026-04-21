@@ -31,6 +31,10 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.DOWNSTREAM_REPO_DISPATCH_TOKEN }}
     steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
+
+
     - name: Trigger downstream repository_dispatch with action
       uses: ./.github/actions/gh-repo-dispatch
       with:
