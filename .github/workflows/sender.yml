@@ -5,6 +5,9 @@ on:
       release_version:
         description: 'Release version to send to downstream repository'
         required: true
+      release_version_for_action:
+        description: 'Release version to send to downstream repository with action (can be different from release_version to test different versions)'
+        required: true
 
 permissions: write-all
 
@@ -22,5 +25,18 @@ jobs:
           repos/SauVans/githubActions2/dispatches \
           -f event_type='githubActions-release-published' \
           -F "client_payload[ort_release_branch]=${ORT_RELEASE_BRANCH}"
+
+  dispatch-custom-event-with-action:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.DOWNSTREAM_REPO_DISPATCH_TOKEN }}
+    steps:
+    - name: Trigger downstream repository_dispatch with action
+      uses: ./.github/gh-repo-dispatch
+      with:
+        app: githubActions
+        version: ${{ github.event.inputs.release_version }}
+        repository: SauVans/githubActions2
+        token: ${{ secrets.DOWNSTREAM_REPO_DISPATCH_TOKEN }}
   
 
