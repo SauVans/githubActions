@@ -39,7 +39,7 @@ jobs:
       uses: ./.github/actions/gh-repo-dispatch
       with:
         app: githubActions
-        version: ${{ github.event.inputs.release_version }}
+        version: ${{ github.event.inputs.release_version_for_action }}
         repository: SauVans/githubActions2
         token: ${{ secrets.DOWNSTREAM_REPO_DISPATCH_TOKEN }}
   
