@@ -39,4 +39,4 @@ runs:
       token: ${{ inputs.token }}
       repository: ${{ inputs.repository }}
       event-type: ${{ inputs.app }}_release
-      client-payload: '{ "${{ inputs.app }}": { "version": "${{ inputs.version }}", "amiId": "${{ inputs.ami-id }}", "s3": { "path": "${{ inputs.s3-path }}", "awsRole": "${{ inputs.aws-role }}" }, "changelog": ${{ inputs.changelog }} } }'
+      client-payload: '{ "${{ inputs.app }}": { "version": "${{ inputs.version }}", "amiId": "${{ inputs.ami-id }}", "s3": { "path": "${{ inputs.s3-path }}", "awsRole": "${{ inputs.aws-role }}" }, "changelog": "${{ inputs.changelog }}" } }'
