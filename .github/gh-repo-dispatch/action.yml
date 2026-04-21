@@ -1,0 +1,42 @@
+name: release-dispatch
+description: Inform about a new release version by sending repository_dispatch request
+
+inputs:
+  app:
+    description: Name of the released application, e.g. renderX
+    required: true
+  version:
+    description: Released version of the app
+    required: true
+  ami-id:
+    description: Built AMI ID
+    required: false
+    default: 'none'
+  s3-path:
+    description: S3 path where release artifacts are located
+    required: false
+    default: 'none'
+  aws-role:
+    description: AWS role name to assume for accessing release-related files on S3
+    required: false
+    default: 'none'
+  changelog:
+    description: Changelog describing changes in released application
+    required: false
+    default: 'none'
+  repository:
+    description: Github repository which is meant to receive the dispatch message
+    required: true
+  token:
+    description: Github token with access to receiveding repository
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: peter-evans/repository-dispatch@v2.1.1
+    with:
+      token: ${{ inputs.token }}
+      repository: ${{ inputs.repository }}
+      event-type: ${{ inputs.app }}_release
+      client-payload: '{ "${{ inputs.app }}": { "version": "${{ inputs.version }}", "amiId": "${{ inputs.ami-id }}", "s3": { "path": "${{ inputs.s3-path }}", "awsRole": "${{ inputs.aws-role }}" }, "changelog": ${{ inputs.changelog }} } }'
